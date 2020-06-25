@@ -244,9 +244,9 @@ def exportUsers(request):
 def exportResponses(request):
     response = HttpResponse(content_type="text/csv")
     writer = csv.writer(response)
-    writer.writerow(['user_id','chosen','unchosen','query','time_elapsed','date'])
+    writer.writerow(['user_id','chosen','unchosen','query', 'num_fake', 'time_elapsed','date'])
     for r in Response.objects.all():
-        writer.writerow([r.respondent.id, r.chosen_alg.name, r.unchosen_alg.name, r.query.query_name, r.time_elapsed, r.date])
+        writer.writerow([r.respondent.id, r.chosen_alg.name, r.unchosen_alg.name, r.query.query_name, r.query.num_fake, r.time_elapsed, r.date])
     today = datetime.date.today()
     filename = "responses_" + today.strftime("%m_%d_%Y") + ".csv"
     response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
